@@ -1,0 +1,105 @@
+Задача 1
+
+function findMaxDifference(arr) {
+    if (arr.length < 2) {
+        return 0; 
+    }
+
+    let maxDifference = arr[1] - arr[0];
+    let minElement = arr[0];
+
+    for (let i = 1; i < arr.length; i++) {
+        maxDifference = Math.max(maxDifference, arr[i] - minElement);
+        minElement = Math.min(minElement, arr[i]);
+    }
+
+    return maxDifference;
+}
+const arrayForMaxDifference = [7, 1, 5, 3, 6, 4];
+const maxDiff = findMaxDifference(arrayForMaxDifference);
+console.log("Максимальная разница:", maxDiff);
+
+function removeDuplicates(arr) {
+    return Array.from(new Set(arr));
+}
+const arrayWithDuplicates = [1, 2, 2, 3, 4, 4, 5];
+const uniqueArray = removeDuplicates(arrayWithDuplicates);
+console.log("Массив без повторений:", uniqueArray);
+
+function filterDoneObjects(arr) {
+    return arr.filter(obj => obj.isDone === true);
+}
+const arrayOfObjects = [
+    {id: 1, isDone: true},
+    {id: 2, isDone: false},
+    {id: 3, isDone: true}
+];
+
+const doneObjects = filterDoneObjects(arrayOfObjects);
+console.log("Объекты с isDone: true", doneObjects);
+
+Задача 2
+
+function filterGreaterThan(arr, threshold) {
+    return arr.filter(element => element > threshold);
+}
+const arrayToFilter = [1, 4, 6, 3, 2];
+const thresholdValue = 2;
+const filteredArray = filterGreaterThan(arrayToFilter, thresholdValue);
+console.log("Элементы больше", thresholdValue, ":", filteredArray);
+
+function flattenArray(arr) {
+    return arr.reduce((flatArray, element) => {
+        return flatArray.concat(Array.isArray(element) ? flattenArray(element) : element);
+    }, []);
+}
+const nestedArray = [1, 4, [34, 1, 20], [6, [6, 12, 8], 6]];
+const flatArray = flattenArray(nestedArray);
+console.log("Плоский массив:", flatArray);
+
+Задача 3
+
+function countZeroSumPairs(arr) {
+    const numCount = {};
+    let count = 0;
+
+    for (const num of arr) {
+        const complement = -num;
+
+        if (numCount[complement]) {
+            count++;
+            numCount[complement]--;
+        } else {
+            numCount[num] = (numCount[num] || 0) + 1;
+        }
+    }
+
+    return count;
+}
+
+const arrayForZeroSumPairs = [-7, 12, 4, 6, -4, -12, 0];
+const zeroSumPairsCount = countZeroSumPairs(arrayForZeroSumPairs);
+console.log("Количество пар чисел, дающих в сумме 0:", zeroSumPairsCount);
+
+function countZeroSumTriplets(arr) {
+    let count = 0;
+
+    for (let i = 0; i < arr.length - 2; i++) {
+        for (let j = i + 1; j < arr.length - 1; j++) {
+            for (let k = j + 1; k < arr.length; k++) {
+                if (arr[i] + arr[j] + arr[k] === 0) {
+                    count++;
+                }
+            }
+        }
+    }
+
+    return count;
+}
+
+const arrayForZeroSumTriplets = [-7, 12, 4, 6, -4, -12, 0];
+const zeroSumTripletsCount = countZeroSumTriplets(arrayForZeroSumTriplets);
+console.log("Количество троек чисел, дающих в сумме 0:", zeroSumTripletsCount);
+
+
+

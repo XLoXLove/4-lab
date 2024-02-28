@@ -1,0 +1,114 @@
+Реализовать генератор, бесконечно возвращающий случайное число в заданном диапазоне random(n, m).
+
+function* randomGenerator(min, max) {
+    while (true) {
+        yield Math.floor(Math.random() * (max - min + 1) + min);
+    }
+}
+
+const rangeMin = 1;
+const rangeMax = 100;
+const randomGen = randomGenerator(rangeMin, rangeMax);
+
+console.log(randomGen.next().value);
+
+Реализовать генератор, бесконечно возвращающий очередное число из последовательности Падована.
+
+function* padovanGenerator() {
+    let a = 1, b = 1, c = 1;
+    while (true) {
+        yield a;
+        const next = a + b;
+        a = b;
+        b = c;
+        c = next;
+    }
+}
+
+const padovanGen = padovanGenerator();
+
+console.log(padovanGen.next().value);
+console.log(padovanGen.next().value);
+console.log(padovanGen.next().value);
+
+Реализовать генератор, бесконечно возвращающий очередное простое число.
+
+function* primeGenerator() {
+    const primes = [2];
+    yield 2;
+
+    for (let num = 3; ; num += 2) {
+        if (primes.every(prime => num % prime !== 0)) {
+            primes.push(num);
+            yield num;
+        }
+    }
+}
+
+const primeGen = primeGenerator();
+
+console.log(primeGen.next().value);
+console.log(primeGen.next().value);
+
+Посчитать число вхождений букв (или слов) в строке, используя Map.
+
+function countOccurrences(inputString) {
+    const charMap = new Map();
+
+    for (const char of inputString) {
+        if (charMap.has(char)) {
+            charMap.set(char, charMap.get(char) + 1);
+        } else {
+            charMap.set(char, 1);
+        }
+    }
+
+    return charMap;
+}
+
+const inputString = "hello world";
+const charOccurrences = countOccurrences(inputString);
+
+charOccurrences.forEach((count, char) => {
+    console.log(`Символ '${char}' встречается ${count} раз(а)`);
+});
+
+Написать функцию getPrime(n), возвращающее n-ное по счёту простое число, используя BigInt.
+function isPrime(num) {
+    if (num <= 1n) return false;
+    if (num <= 3n) return true;
+    
+    if (num % 2n === 0n || num % 3n === 0n) return false;
+
+    let i = 5n;
+    while (i * i <= num) {
+        if (num % i === 0n || num % (i + 2n) === 0n) return false;
+        i += 6n;
+    }
+
+    return true;
+}
+
+function getPrime(n) {
+    if (n <= 0) {
+        throw new Error("n должно быть положительным числом");
+    }
+
+    let count = 0;
+    let num = 2n;
+
+    while (count < n) {
+        if (isPrime(num)) {
+            count++;
+        }
+        num++;
+    }
+
+    return num - 1n; 
+}
+
+const nthPrime = 5;
+const result = getPrime(nthPrime);
+console.log(`[${nthPrime}] простое число: ${result}`);
+
+
